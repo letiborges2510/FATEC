@@ -84,15 +84,6 @@ public class MinhaPrimeiraED {
     }
 }
 
-    public int tamanho() {
-        return totalDeObjetos;
-    }
-
-    public boolean vazio() {
-        return totalDeObjetos == 0;
-    }
-
-  
     public boolean ocupado() {
         if (objts.length == totalDeObjetos) {
             Object[] Vetorn = new Object[objts.length * 2];
