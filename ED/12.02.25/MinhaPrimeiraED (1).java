@@ -1,72 +1,109 @@
 public class MinhaPrimeiraED {
-    public static void main(String[] args) {
-        MinhaPrimeiraED lista = new MinhaPrimeiraED();
-        
-        lista.inserir("Item A");
-        lista.inserir("Item B");
-        
-        lista.mostrarLista();
-    }
     
-    private Object[] elementos = new Object[10];
-    private int quantidadeElementos = 0;
+    public Object[] elementos = new Object[10];
+    public int totalDeObjetos = 0;
     
-    public void inserir(int indice, Object elemento) {
-        if (!indiceValido(indice)) {
-            throw new IllegalArgumentException("Índice fora do intervalo permitido!");
-        }
-        if (indiceOcupado(indice)) {
-            throw new IllegalArgumentException("Este índice já contém um elemento!");
-        }
-        elementos[indice] = elemento;
-        quantidadeElementos++;
-    }
-    
-    public void inserir(Object elemento) {
-        if (quantidadeElementos >= elementos.length) {
-            throw new IllegalStateException("A estrutura está cheia!");
-        }
-        for (int i = 0; i < elementos.length; i++) {
-            if (elementos[i] == null) {
-                elementos[i] = elemento;
-                quantidadeElementos++;
-                return;
+    public void adiciona(int posicao, Object objeto) {
+       if (posicaoValida(posicao)){
+           
+           if (posicaoOcupada(posicao)) {
+               
+               if (!ocupado()){
+                   for (int i = totalDeObjetos; i > posicao.length; i--) {
+                       objts[i] = objts [i - 1];
+               }
+               objts [posicao] = objts;
+                   totalDeObjetos ++;
+               
+           }else{
+                for (int i = totalDeObjetos; i > posicao.length; i--) {
+                       objts[i] = objts [i - 1];
+           }
+           objts [posicao] = objts;
+               totalDeObjetos ++;
+       
             }
+            
+        }else if (posicaoOcupada(posicao) && !ocupado) {
+            for (int i = totalDeObjetos; i > posicao.length; i--) {
+                   objts[i] = objts [i - 1];
+                
         }
+         objts [posicao] = objts;
+             totalDeObjetos ++;
     }
     
-    private boolean indiceOcupado(int indice) {
-        return elementos[indice] != null;
-    }
+}else{
+    System.out.println("Está posição não está válida!");
+}
     
-    private boolean indiceValido(int indice) {
-        return indice >= 0 && indice < elementos.length;
-    }
-    
-    public void remover(int indice) {
-        if (!indiceValido(indice) || !indiceOcupado(indice)) {
-            throw new IllegalArgumentException("Índice inválido ou sem elemento!");
+    public void adiciona(Object objeto) {
+         if (!ocupado()) {
+           objts[totalDeObjetos] = objeto;
+           totalDeObjetos++;
         }
-        elementos[indice] = null;
-        quantidadeElementos--;
+        
+    private boolean posicaoOcupada(int posicao) {
+        return objts [posicao] != null;
     }
     
-    public boolean contem(Object elemento) {
-        for (Object obj : elementos) {
-            if (obj != null && obj.equals(elemento)) {
+    private boolean posicaoValida(int posicao) {
+        return posicao >= 0 && posicao < obj.length;
+    }
+    
+    public void remover(int posicao) {
+        if (!posicaoValida(posicao) || !posicaoOcupada(posicao)) {
+           for (int i = posicao; i < totalDeObjetos - 1; i++)
+            objts[i] = objts [i +1];
+
+        }
+        objts[posicao] = null;
+        totalDeObjetos--;
+    }
+    
+    public boolean contem(Object objeto) {
+        for (Object objV : objts) {
+            if (objeto != null && objts.equals(objtV)) {
                 return true;
             }
         }
         return false;
     }
     
-    public int contarElementos() {
-        return quantidadeElementos;
+    public int contarObjetos() {
+         if (posicaoValida(posicao) && posicaoOcupada(posicao)) {
+            return objetos[posicao];
     }
+     return null;
+}
     
     public void mostrarLista() {
-        for (int i = 0; i < elementos.length; i++) {
-            System.out.println("Posição " + i + ": " + elementos[i]);
+        for (int i = 0; i < objts.length; i++) {
+            System.out.println("Posição " + i + ": " + objts[i]);
         }
+    }
+}
+
+    public int tamanho() {
+        return totalDeObjetos;
+    }
+
+    public boolean vazio() {
+        return totalDeObjetos == 0;
+    }
+
+  
+    public boolean ocupado() {
+        if (objts.length == totalDeObjetos) {
+            Object[] Vetorn = new Object[objts.length * 2];
+
+            for (int i = 0; i < objts.length; i++) {
+                Vetorn[i] = objts[i];
+            }
+
+            objts = Vetorn;
+            return true;
+        }
+        return false;
     }
 }
