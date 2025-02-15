@@ -1,149 +1,132 @@
 public class MinhaPrimeiraED {
-    
-    // Criação de um array de objetos com capacidade inicial de 10
-    public Object[] elementos = new Object[10];
 
-     // Variável que mantém o controle do número total de objetos na lista
-    public int totalDeObjetos = 0;
+    private Object[] objetos = new Object[10]; // Vetor inicial com capacidade 10
+    private int totalDeObjetos = 0; // Contador de elementos no vetor
 
     // Método para adicionar um objeto em uma posição específica
     public void adiciona(int posicao, Object objeto) {
-
-        // Verifica se a posição é válida antes de adicionar o objeto
-       if (posicaoValida(posicao)){
-
-            // Se a posição está ocupada, move os objetos para abrir espaço
-           if (posicaoOcupada(posicao)) {
-               if (!ocupado()){
-
-                    // Move os objetos à direita para abrir espaço na posição
-                   for (int i = totalDeObjetos; i > posicao.length; i--) {
-                       objts[i] = objts [i - 1];
-               }
-
-               // Adiciona o novo objeto na posição correta
-               objts [posicao] = objeto;
-
-                   // Incrementa o contador de objetos
-                   totalDeObjetos ++;
-               
-           }else{
-                 // Se o array estiver cheio, cria um novo maior
-                for (int i = totalDeObjetos; i > posicao.length; i--) {
-                       objts[i] = objts [i - 1];
-           }
-                   
-           // Adiciona o novo objeto na posição correta
-           objts [posicao] = objts;
-
-               // Incrementa o contador de objetos
-               totalDeObjetos ++;
-            }
-            
-        }else if (posicaoOcupada(posicao) && !ocupado) {
-            for (int i = totalDeObjetos; i > posicao.length; i--) {
-                   objts[i] = objts [i - 1];
-                
+        if (!posicaoValida(posicao)) {
+            throw new IndexOutOfBoundsException("Posição inválida: " + posicao);
         }
-         objts [posicao] = objts;
-             totalDeObjetos ++;
+
+        if (totalDeObjetos == objetos.length) {
+            aumentaCapacidade(); // Expande a capacidade do vetor caso esteja cheio
+        }
+
+        // Desloca elementos para a direita para abrir espaço
+        for (int i = totalDeObjetos; i > posicao; i--) {
+            objetos[i] = objetos[i - 1];
+        }
+
+        objetos[posicao] = objeto; // Insere o novo objeto
+        totalDeObjetos++; // Atualiza o contador
     }
-    
-}else{
-    // Se a posição não for válida, exibe uma mensagem de erro
-    System.out.println("Está posição não está válida!");
-}
-    // Método para adicionar um objeto ao final da lista, sem especificar a posição
+
+    // Método para adicionar um objeto na próxima posição disponível
     public void adiciona(Object objeto) {
-                
-         // Verifica se há espaço para adicionar o objeto
-         if (!ocupado()) {
-        
-           // Adiciona o objeto no próximo espaço disponível
-           objts[totalDeObjetos] = objeto;
+        adiciona(totalDeObjetos, objeto); // Reutiliza o método acima
+    }
 
-           // Incrementa o contador de objetos
-           totalDeObjetos++;
-        }
-        
-    // Método que verifica se a posição fornecida já está ocupada
+    // Método para verificar se uma posição está ocupada
     private boolean posicaoOcupada(int posicao) {
-
-        // Retorna true se a posição estiver ocupada (não for null)
-        return objts [posicao] != null;
+        return posicao >= 0 && posicao < totalDeObjetos;
     }
 
-    // Método que verifica se a posição fornecida é válida no array
+    // Método para verificar se a posição é válida para inserção
     private boolean posicaoValida(int posicao) {
-        
-        // A posição é válida se estiver entre 0 e o tamanho do array
-        return posicao >= 0 && posicao < obj.length;
+        return posicao >= 0 && posicao <= totalDeObjetos; // Permite inserir no final
     }
 
-    // Método para remover um objeto em uma posição específica
-    public void remover(int posicao) {
-        
-        // Verifica se a posição é válida e se está ocupada antes de remover
-        if (!posicaoValida(posicao) || !posicaoOcupada(posicao)) {
+    // Método para remover um elemento de uma determinada posição
+    public void remove(int posicao) {
+        if (!posicaoOcupada(posicao)) {
+            throw new IndexOutOfBoundsException("Posição inválida: " + posicao);
+        }
 
-           // Move os objetos à esquerda para "fechar" o espaço da posição removida
-           for (int i = posicao; i < totalDeObjetos - 1; i++)
-            objts[i] = objts [i +1];
+        // Desloca elementos para a esquerda para preencher o espaço removido
+        for (int i = posicao; i < totalDeObjetos - 1; i++) {
+            objetos[i] = objetos[i + 1];
+        }
 
-        // Define a posição removida como null
-        objts[totalDeObjetos - 1] = null;
-
-        // Decrementa o contador de objetos
-        totalDeObjetos--;
+        objetos[--totalDeObjetos] = null; // Remove a última referência e atualiza o contador
     }
 
-    // Método que verifica se um objeto está na lista
+    // Método para verificar se um objeto está presente no vetor
     public boolean contem(Object objeto) {
-
-        // Itera sobre os elementos e compara com o objeto fornecido
-        for (Object objV : objts) {
-            if (objeto != null && objts.equals(objtV)) {
+        for (int i = 0; i < totalDeObjetos; i++) {
+            if ((objetos[i] == null && objeto == null) || (objetos[i] != null && objetos[i].equals(objeto))) {
                 return true;
             }
         }
         return false;
     }
-    
-    // Método para contar o número total de objetos na lista
-    public int contarObjetos() {
-        
-         // Retorna o número de objetos no array
-         return totalDeObjetos;
+
+    // Método para retornar um objeto de uma posição específica
+    public Object getObjeto(int posicao) {
+        if (!posicaoOcupada(posicao)) {
+            throw new IndexOutOfBoundsException("Posição inválida: " + posicao);
+        }
+        return objetos[posicao];
     }
 
-    // Método para exibir os objetos armazenados na lista
+    // Método para retornar o número de elementos armazenados
+    public int tamanho() {
+        return totalDeObjetos;
+    }
+
+    // Método para dobrar a capacidade do vetor quando necessário
+    private void aumentaCapacidade() {
+        Object[] novoArray = new Object[objetos.length * 2]; // Novo vetor com o dobro do tamanho
+        for (int i = 0; i < objetos.length; i++) {
+            novoArray[i] = objetos[i]; // Copia os elementos para o novo vetor
+        }
+        objetos = novoArray;
+    }
+
+    // Método auxiliar para exibir a lista no console
     public void mostrarLista() {
-        
-        // Itera sobre o array e imprime cada elemento
-        for (int i = 0; i < objts.length; i++) {
-            System.out.println("Posição " + i + ": " + objts[i]);
+        for (int i = 0; i < totalDeObjetos; i++) {
+            System.out.println("Posição " + i + ": " + objetos[i]);
         }
     }
-}
 
-    // Método que verifica se o array está cheio e, se estiver, aumenta seu tamanho
-    public boolean ocupado() {
+    // Método principal para testes
+    public static void main(String[] args) {
+        MinhaPrimeiraED lista = new MinhaPrimeiraED();
 
-        // Verifica se o array está cheio (tamanho total igual ao número de objetos)
-        if (objts.length == totalDeObjetos) {
+        // Teste de adicionar elementos
+        System.out.println("Adicionando elementos...");
+        lista.adiciona("A");
+        lista.adiciona("B");
+        lista.adiciona("C");
+        lista.mostrarLista();
 
-            // Cria um novo array com o dobro do tamanho
-            Object[] Vetorn = new Object[objts.length * 2];
+        // Teste de adicionar em uma posição específica
+        System.out.println("\nAdicionando 'X' na posição 1...");
+        lista.adiciona(1, "D");
+        lista.mostrarLista();
 
-            // Copia os elementos do array original para o novo
-            for (int i = 0; i < objts.length; i++) {
-                Vetorn[i] = objts[i];
-            }
+        // Teste de verificar se contém um elemento
+        System.out.println("\nA lista contém 'B'? " + lista.contem("B"));
+        System.out.println("A lista contém 'Z'? " + lista.contem("Z"));
 
-            // Aponta o array original para o novo array maior
-            objts = Vetorn;
-            return true;
+        // Teste de remover elemento
+        System.out.println("\nRemovendo o elemento da posição 2...");
+        lista.remove(2);
+        lista.mostrarLista();
+
+        // Teste de obter elemento por posição
+        System.out.println("\nElemento na posição 1: " + lista.getObjeto(1));
+
+        // Teste de tamanho da lista
+        System.out.println("\nTamanho da lista: " + lista.tamanho());
+
+        // Teste de expansão automática do vetor
+        System.out.println("\nAdicionando mais elementos");
+        for (int i = 0; i < 15; i++) {
+            lista.adiciona( (i + 1));
         }
-        return false;
+        lista.mostrarLista();
+        System.out.println("Novo tamanho da estrutura: " + lista.objetos.length);
     }
 }
