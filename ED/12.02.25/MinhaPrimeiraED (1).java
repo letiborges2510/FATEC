@@ -20,6 +20,8 @@ public class MinhaPrimeiraED {
 
         objetos[posicao] = objeto; // Insere o novo objeto
         totalDeObjetos++; // Atualiza o contador
+        System.out.println("[Adição] Objeto '" + objeto + "' adicionado na posição " + posicao);
+        System.out.println(); // Linha em branco
     }
 
     // Método para adicionar um objeto na próxima posição disponível
@@ -49,15 +51,21 @@ public class MinhaPrimeiraED {
         }
 
         objetos[--totalDeObjetos] = null; // Remove a última referência e atualiza o contador
+        System.out.println("[Remoção] Elemento na posição " + posicao + " removido.");
+        System.out.println(); // Linha em branco
     }
 
     // Método para verificar se um objeto está presente no vetor
     public boolean contem(Object objeto) {
         for (int i = 0; i < totalDeObjetos; i++) {
             if ((objetos[i] == null && objeto == null) || (objetos[i] != null && objetos[i].equals(objeto))) {
+                System.out.println("[Verificação] Objeto '" + objeto + "' encontrado.");
+                System.out.println(); // Linha em branco
                 return true;
             }
         }
+        System.out.println("[Verificação] Objeto '" + objeto + "' não encontrado.");
+        System.out.println(); // Linha em branco
         return false;
     }
 
@@ -66,11 +74,15 @@ public class MinhaPrimeiraED {
         if (!posicaoOcupada(posicao)) {
             throw new IndexOutOfBoundsException("Posição inválida: " + posicao);
         }
+        System.out.println("[Acesso] Objeto na posição " + posicao + ": " + objetos[posicao]);
+        System.out.println(); // Linha em branco
         return objetos[posicao];
     }
 
     // Método para retornar o número de elementos armazenados
     public int tamanho() {
+        System.out.println("[Tamanho] Tamanho da lista: " + totalDeObjetos);
+        System.out.println(); // Linha em branco
         return totalDeObjetos;
     }
 
@@ -81,13 +93,17 @@ public class MinhaPrimeiraED {
             novoArray[i] = objetos[i]; // Copia os elementos para o novo vetor
         }
         objetos = novoArray;
+        System.out.println("[Capacidade] Capacidade aumentada para " + objetos.length);
+        System.out.println(); // Linha em branco
     }
 
     // Método auxiliar para exibir a lista no console
     public void mostrarLista() {
+        System.out.println("[Lista] Lista atual:");
         for (int i = 0; i < totalDeObjetos; i++) {
             System.out.println("Posição " + i + ": " + objetos[i]);
         }
+        System.out.println(); // Linha em branco
     }
 
     // Método principal para testes
@@ -95,38 +111,38 @@ public class MinhaPrimeiraED {
         MinhaPrimeiraED lista = new MinhaPrimeiraED();
 
         // Teste de adicionar elementos
-        System.out.println("Adicionando elementos...");
+        System.out.println("[Teste] Adicionando elementos...");
         lista.adiciona("A");
         lista.adiciona("B");
         lista.adiciona("C");
         lista.mostrarLista();
 
         // Teste de adicionar em uma posição específica
-        System.out.println("\nAdicionando 'X' na posição 1...");
+        System.out.println("[Teste] Adicionando 'D' na posição 1...");
         lista.adiciona(1, "D");
         lista.mostrarLista();
 
         // Teste de verificar se contém um elemento
-        System.out.println("\nA lista contém 'B'? " + lista.contem("B"));
-        System.out.println("A lista contém 'Z'? " + lista.contem("Z"));
+        System.out.println("[Teste] A lista contém 'B'? " + lista.contem("B"));
+        System.out.println("[Teste] A lista contém 'Z'? " + lista.contem("Z"));
 
         // Teste de remover elemento
-        System.out.println("\nRemovendo o elemento da posição 2...");
+        System.out.println("[Teste] Removendo o elemento da posição 2...");
         lista.remove(2);
         lista.mostrarLista();
 
         // Teste de obter elemento por posição
-        System.out.println("\nElemento na posição 1: " + lista.getObjeto(1));
+        System.out.println("[Teste] Elemento na posição 1: " + lista.getObjeto(1));
 
         // Teste de tamanho da lista
-        System.out.println("\nTamanho da lista: " + lista.tamanho());
+        lista.tamanho();
 
         // Teste de expansão automática do vetor
-        System.out.println("\nAdicionando mais elementos");
+        System.out.println("[Teste] Adicionando mais elementos...");
         for (int i = 0; i < 15; i++) {
             lista.adiciona( (i + 1));
         }
         lista.mostrarLista();
-        System.out.println("Novo tamanho da estrutura: " + lista.objetos.length);
+        System.out.println("[Teste] Novo tamanho da estrutura: " + lista.objetos.length);
     }
 }
