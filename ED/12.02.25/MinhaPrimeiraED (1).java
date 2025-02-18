@@ -26,8 +26,13 @@ public class MinhaPrimeiraED {
 
     // Método para adicionar um objeto na próxima posição disponível
     public void adiciona(Object objeto) {
+    if (totalDeObjetos < objetos.length) {
         adiciona(totalDeObjetos, objeto); // Reutiliza o método acima
+    } else {
+        System.out.println("[Erro] Não há mais espaço para adicionar o objeto: " + objeto);
+        System.out.println(); // Linha em branco
     }
+}
 
     // Método para verificar se uma posição está ocupada
     private boolean posicaoOcupada(int posicao) {
